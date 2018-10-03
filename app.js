@@ -28,7 +28,7 @@ connection.on('error', (err) => {
 // 7. then we added a script to the package.json
 // 8. then we changed lined 15 of the www .bin file
 // 9. i think we're about to deploy to heroku and test... so first we did npm run build in the client folder
-// 10. ...we pasted some lines into the idea board package json. engines? things?
+// 10. ? ... we pasted some lines into the idea board package json. engines? things?
 // 11. IN THE IDEA BOARD TERMINAL DO HEROKU STUFF
 
 // EXPRESS AND MIDDLEWARE
