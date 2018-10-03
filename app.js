@@ -46,4 +46,10 @@ app.get('/', (req, res) => {
     res.sendFile(__dirname + '/client/build/index.html')
 })
 
+// 13. bring in controller
+const usersController = require('./routes/usersController')
+
+// 12. where our data will be...
+app.use('/api/users', usersController)
+
 module.exports = app
