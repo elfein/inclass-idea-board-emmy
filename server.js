@@ -34,11 +34,12 @@ connection.on('error', (err) => {
 // EXPRESS AND MIDDLEWARE
 var app = express()
 
+
+// 16. we also took out unecessary files like the link to public directory, the directory itself, and index and user.js files in routes
 app.use(logger('dev'))
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser())
-app.use(express.static(path.join(__dirname, 'public')))
 app.use(express.static(__dirname + '/client/build/'))
 
 // ROUTES

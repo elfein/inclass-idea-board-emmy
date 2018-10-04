@@ -4,7 +4,9 @@
  * Module dependencies.
  */
 
-var app = require('../app');
+
+ // 16. (day 2 of codealong) change the ../app to ../server after renaming server.js
+var app = require('../server');
 var debug = require('debug')('idea-board:server');
 var http = require('http');
 
