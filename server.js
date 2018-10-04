@@ -1,6 +1,7 @@
 // IMPORTING DEPENDENCIES
 require('dotenv').config()
 // ^^^1. always remember this env setup!!!!!
+// BE VERY CAREFUL
 // 1b. MAKE A GIT REPO
 var express = require('express')
 var path = require('path')
