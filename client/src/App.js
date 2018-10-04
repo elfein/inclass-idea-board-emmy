@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 // 22. we deleted a few more things like the css file
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom'
 import IdeaBoard from './components/IdeaBoard';
+import Home from './components/Home';
 
 class App extends Component {
   render() {
@@ -10,7 +11,7 @@ class App extends Component {
         {/* 23. Then we changed the content in here to be Router and Switch and stuff */}
         <Router>
           <Switch>
-            <Route exact path='/' component={IdeaBoard} />
+            <Route exact path='/' component={ Home } />
           </Switch>
         </Router>
       </div>
