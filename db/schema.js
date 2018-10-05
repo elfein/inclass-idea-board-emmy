@@ -1,8 +1,14 @@
 const Schema = require('mongoose').Schema
 
 const IdeaSchema = new Schema({
-    title: String,
-    description: String
+    title: {
+        type: String,
+        default: 'New Idea'
+    },
+    description: {
+        type: String,
+        default: 'New Description'
+    }
 })
 
 const UserSchema = new Schema({

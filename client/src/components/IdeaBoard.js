@@ -36,7 +36,7 @@ display: flex;
 flex-direction: row;
 flex-wrap: wrap;
 justify-content: flex-start;
-max-width: 560px;
+max-width: 600px;
 `
 
 const StyledIdea = styled.div`
@@ -51,9 +51,18 @@ box-shadow: 6px 6px 6px rgb(230,230,230);
 div {
   font-size: 14px;
 }
+&:hover {
+  #idea-title > span {
+    display: inline;
+  }
+}
 #idea-title {
   font-weight: 700;
   margin: 0 0 10px 0;
+  span {
+    float: right;
+    display: none;
+  }
 }
 `
 
@@ -74,20 +83,52 @@ export default class IdeaBoard extends Component {
     // different ways to get data off of the response from axios, I like this one
     this.setState({
       user: response.data,
-      ideas: response.data.ideas
+      // can reverse an array for things that should be chronological
+      ideas: response.data.ideas.reverse()
     })
+  }
+
+  handleNew = async () => {
+    const userId = this.props.match.params.userId
+    const newIdea = await axios.post(`/api/users/${userId}/ideas`)
+    await this.getUser()
+  }
+
+  handleDelete = async (ideaId) => {
+    await axios.delete(`/api/users/${this.state.user._id}/ideas/${ideaId}`)
+    await this.getUser()
   }
 
   componentDidMount = () => {
     this.getUser()
   }
 
+  handleChange = (event, i) => {
+    const ideas = [...this.state.ideas]
+    ideas[i][event.target.name] = event.target.value
+    this.setState({ ideas })
+  }
+
+  updateIdea = async (i) => {
+    const updatedIdea = this.state.ideas[i]
+    await axios.put(`/api/users/${this.props.match.params.userId}/ideas/${updatedIdea._id}`, updatedIdea)
+  }
+
   render() {
 
     const ideasList = this.state.ideas.map((idea, i) => {
       return <StyledIdea key={i}>
-        <div id="idea-title">{idea.title}</div>
-        <div>{idea.description}</div>
+        
+        <input type='text' id="idea-title" name='title' value={idea.title} 
+        onChange={(event) => this.handleChange(event, i)} 
+        onBlur={() => this.updateIdea(i)} />
+        
+        <span onClick={() => this.handleDelete(idea._id)} >x</span>
+        
+        <input type='text' name='description' value={idea.description} 
+        onChange={(event) => this.handleChange(event, i)} 
+        onBlur={() => this.updateIdea(i)}  />
+
       </StyledIdea>
     })
 
@@ -95,7 +136,7 @@ export default class IdeaBoard extends Component {
       <StyledPage>
         <h1>Idea Board for {this.state.user.userName}</h1>
         <div id="interactions">
-          <button>New Idea</button>
+          <button onClick={this.handleNew}>New Idea</button>
           <span>Sort ideas by: <button>??</button></span>
           <span id="save-message">All changes saved</span>
         </div>
