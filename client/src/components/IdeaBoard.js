@@ -23,6 +23,7 @@ button {
   padding: 15px;
   color: rgb(250,250,250);
   transition: color ease 1s;
+  /* remember the ampersand for pseudo-classes */
   &:hover{
     color: rgb(0,0,0);
     transition: color ease 1s, background-color ease 1s;
@@ -83,17 +84,20 @@ export default class IdeaBoard extends Component {
     // different ways to get data off of the response from axios, I like this one
     this.setState({
       user: response.data,
-      // can reverse an array for things that should be chronological
+      // can reverse an array for things that should be reverse chronological
       ideas: response.data.ideas.reverse()
     })
   }
 
+  // this was to create a new instance of model 2 but a blank, default one. would the 'new Idea' here
+  // be used if we were wanting to make something out of a form with specific values?
   handleNew = async () => {
     const userId = this.props.match.params.userId
     const newIdea = await axios.post(`/api/users/${userId}/ideas`)
     await this.getUser()
   }
 
+  // can keep using getUser to update state and rerender
   handleDelete = async (ideaId) => {
     await axios.delete(`/api/users/${this.state.user._id}/ideas/${ideaId}`)
     await this.getUser()
@@ -103,12 +107,14 @@ export default class IdeaBoard extends Component {
     this.getUser()
   }
 
+  // using cool things to evaluate/get keys off object
   handleChange = (event, i) => {
     const ideas = [...this.state.ideas]
     ideas[i][event.target.name] = event.target.value
     this.setState({ ideas })
   }
 
+  // .put here takes the 'path' to be updated? as well as the content of the updated data... ask about proper vocab for this?
   updateIdea = async (i) => {
     const updatedIdea = this.state.ideas[i]
     await axios.put(`/api/users/${this.props.match.params.userId}/ideas/${updatedIdea._id}`, updatedIdea)
@@ -119,6 +125,7 @@ export default class IdeaBoard extends Component {
     const ideasList = this.state.ideas.map((idea, i) => {
       return <StyledIdea key={i}>
         
+        {/* onBlur used here to call updateIdea */}
         <input type='text' id="idea-title" name='title' value={idea.title} 
         onChange={(event) => this.handleChange(event, i)} 
         onBlur={() => this.updateIdea(i)} />
@@ -137,7 +144,9 @@ export default class IdeaBoard extends Component {
         <h1>Idea Board for {this.state.user.userName}</h1>
         <div id="interactions">
           <button onClick={this.handleNew}>New Idea</button>
+          {/* maybe ask about the dropdown here? sounds complicated :') */}
           <span>Sort ideas by: <button>??</button></span>
+          {/* also ask about how to manipulate CSS depending on which functions are called like intended below... */}
           <span id="save-message">All changes saved</span>
         </div>
         <StyledIdeaContainer>

@@ -4,12 +4,13 @@ require('dotenv').config()
 // BE VERY CAREFUL
 // 1b. MAKE A GIT REPO
 var express = require('express')
+// hw - why is 'path' not used here?
 var path = require('path')
 var cookieParser = require('cookie-parser')
 var logger = require('morgan')
 
 // CONNECT TO DB
-// 2. brought in mongoose, 2b connected mongoose, 2c added path in env file
+// 2. brought in mongoose, 2b. connected mongoose, 2c. added path in env file
 const mongoose = require('mongoose')
 mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true })
 
@@ -41,6 +42,7 @@ app.use(logger('dev'))
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser())
+// hw - this was something to do with creating a front-end for the 3001 path? 
 app.use(express.static(__dirname + '/client/build/'))
 
 // ROUTES

@@ -1,10 +1,10 @@
-// 13a make this file
+// 13a make this whole file
 const router = require('express').Router()
-// 14? make this data part
+// 14? make this data part, hw - this allows for the user of the User model from our db folder...
 const { User } = require('../db/model')
 
 // Show All
-//  HOW TO DO AN AWAIT ASYNC FUNCTION WITH CALLBACK FUNCTION?
+//  HOW TO DO AN AWAIT ASYNC FUNCTION WITH CALLBACK FUNCTION:
 router.get('/', async (req, res) => {
     const users = await User.find()
     res.send(users)
@@ -29,7 +29,7 @@ router.get('/:id', async (req, res) => {
 })
 
 
-// 21. then this!! don't just copy paste
+// 21. then this!! don't just copy paste for this one
 // Create
 router.post('/', async (req, res) => {
     const user = await User.create(req.body)
@@ -38,6 +38,7 @@ router.post('/', async (req, res) => {
 
 // 19. we did this next. make sure to change .get to .put
 // 20. also we needed to add another parameter after req.body, that new:true part
+// hw - that part is necessary to make sure the response that's sent is the changed data, not the original version, bc mongoose is weird
 // Update
 router.put('/:id', async (req, res) => {
     const user = await User.findByIdAndUpdate(req.params.id, req.body, {new: true})

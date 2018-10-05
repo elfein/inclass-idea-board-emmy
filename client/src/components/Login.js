@@ -2,15 +2,14 @@ import React, { Component } from 'react'
 import axios from 'axios';
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
-import Axios from 'axios';
 
 const StyledLink = styled(Link)`
 text-decoration: none;
 color: rgb(10,10,10);
 `
 
-// to style global thing... you can build a SharedComponents component
-// also... can do "InjectGlobal" which seems cool. in app. ?
+// to style global things... you can build a SharedComponents component
+// also... can do "InjectGlobal" in app. ? 
 export default class Login extends Component {
     state = {
         users: [],
@@ -37,13 +36,18 @@ export default class Login extends Component {
     // THIS IS A BIG DEAL. POSTING TO API FROM STATE
     handleSubmit = async (event) => {
         event.preventDefault()
+        // use axios to send something that was stored in state
         const response = await axios.post('/api/users', this.state.newUser)
+        // take something out of state to then be updated
         const users = [...this.state.users]
+        // update the thing from state with the new instantiated (?) data from the database
         users.push(response.data)
+        // put state back
         this.setState({ users })
     }
 
     render() {
+        // map to make new array of JSX data-items
         const usersList = this.state.users.map((user, i) => {
             return (<div key={i}>
             <StyledLink to={`/users/${user._id}`} >Name: {user.userName}</StyledLink>
@@ -57,7 +61,7 @@ export default class Login extends Component {
                 {/* then we mapped through that array...  */}
                 <h1>Login Page</h1>
                 {usersList}
-                {/* handleSubmit goes in the form tag not submit input */}
+                {/* handleSubmit goes in the form tag not submit input!*/}
                 <form onSubmit={this.handleSubmit} >
                     <input 
                     type='text'

@@ -9,7 +9,8 @@ class App extends Component {
   render() {
     return (
       <div>
-        {/* 23. Then we changed the content in here to be Router and Switch and stuff */}
+        {/* 23. Then we changed the content in here to be Router and Switch and stuff 
+        I forgot between class and now, why aren't we importing the components used here... */}
         <Router>
           <Switch>
             <Route exact path='/' component={ Home } />
